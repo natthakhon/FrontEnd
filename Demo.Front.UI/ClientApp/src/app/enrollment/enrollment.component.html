@@ -1,0 +1,47 @@
+<div>
+  <h4 style="float:left">  Enrollment &nbsp; &nbsp;{{student.name}} &nbsp; {{student.lastname}}</h4>
+  <button class="newenroll"          
+          [disabled]="formGroup.invalid || !canaddMore()"
+          (click)="addEnroll()">
+    New Enrollment
+  </button>  
+  <div [formGroup]="formGroup">
+    <div formArrayName="enrolls">
+      <table>
+        <tr>
+          <th>Delete</th>
+          <th>Course</th>
+          <th>Grade</th>
+          <th>Enroll Date</th>
+        </tr>
+        <tr *ngFor="let enroll of enrolls.controls; let i=index" [formGroupName]="i">
+          <td>
+            <input formControlName="isdelete" type="checkbox" />
+          </td>
+          <td>
+            <select formControlName="course" (change)="onChange($event.target.value,i)">
+              <option *ngFor="let key of courseOption" [label]="key" [value]="courses[key]"></option>
+            </select>
+            <span class="alert" [hidden]="!enrolls.controls[i].get('course').errors?.required"> required </span>
+          </td>
+          <td>
+            <select formControlName="grade">
+              <option *ngFor="let key of gradeOption" [label]="key" [value]="grades[key]"></option>
+            </select>
+            <span class="alert" [hidden]="!enrolls.controls[i].get('grade').errors?.required"> required </span>
+          </td>
+          <td>
+            <input matInput [matDatepicker]="picker"
+                   placeholder="Choose a date"
+                   formControlName="enrolldate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </td>
+        </tr>
+      </table>
+      <button (click)="onSubmit()" [disabled]="formGroup.invalid">
+        SAVE
+      </button>
+    </div>
+  </div>
+</div>

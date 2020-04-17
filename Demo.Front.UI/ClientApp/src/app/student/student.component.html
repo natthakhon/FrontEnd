@@ -1,0 +1,43 @@
+<h4>All Students</h4>
+<div>
+  <input style="float:left"
+       type="text"
+       (input)="search($event.target.value)"
+       [(ngModel)]="searchString"
+       placeholder="Name or Lastname"
+       class="search">
+  <a style="float:right;padding-top:30px;" routerLink="/newstudent"> New Student </a>
+</div>
+<div>
+  <table>
+    <tr>
+      <th style="width:1%"></th>
+      <th>Name</th>
+    </tr>
+    <tr *ngFor="let student of students">
+      <td> <label (click)="display(student)" class="plus"> + </label> </td>
+      <td>
+        <a routerLink="/student/{{student.id}}">
+          {{ student.name }} &nbsp; {{ student.lastname }}
+        </a>
+        <table *ngIf="student.isHidden">
+          <tr>
+            <th> Course </th>
+            <th> Grade </th>
+            <th> Enroll Date &nbsp; &nbsp; &nbsp;
+                  <a routerLink="/enroll/{{student.id}}">
+                      Manage Enrollment
+                  </a>
+            </th>
+          </tr>
+          <tr *ngFor="let enroll of student.enrollments">
+            <td> {{enroll.course }}</td>
+            <td> {{enroll.grade }}</td>
+            <td> {{enroll.enrolldate.toLocaleDateString() }}</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
+

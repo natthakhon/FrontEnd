@@ -1,0 +1,35 @@
+<div >
+  <h4> Add New Student</h4>
+  <form #studentForm="ngForm">
+
+    <div>
+      <label for="name">
+        Name
+        <span class="alert" [hidden]="name.valid || name.pristine"> is required </span>
+      </label>
+      <input type="text" id="name"
+             required
+             [(ngModel)]="student.name"
+             name="name"
+             #name="ngModel">
+    </div>
+
+    <div>
+      <label for="name">
+        Last Name
+        <span class="alert" [hidden]="lastname.valid || lastname.pristine"> is required </span>
+      </label>
+      <input type="text" id="lastname"
+             required
+             [(ngModel)]="student.lastname"
+             name="lastname"
+             #lastname="ngModel">
+    </div>
+
+    <button (click)="onSubmit()"
+            [disabled] ="!studentForm.form.valid">
+      Save
+    </button>
+
+  </form>
+</div>
